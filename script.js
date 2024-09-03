@@ -33,7 +33,7 @@ if ((buttonValue === "*") && (screen.substring(screen.length - 1, screen.length)
   screen = screen.substring(0, screen.length - 1);
 }
 
-  //si ya se hizo una operación previa este bloque evita que se concatene el nuevo numero ingresado en pantalla al resultado anterior
+  //*si ya se hizo una operación previa este bloque evita que se concatene el nuevo numero ingresado en pantalla al resultado anterior
   if (screen === "0" || operacionRealizada === true) {
     if (buttonValue != ".") {
       screen = "";
@@ -43,8 +43,8 @@ if ((buttonValue === "*") && (screen.substring(screen.length - 1, screen.length)
   //borra el cero si va antes de otro número y después de un signo, genera error en las restas
   if (
     screen.substring(screen.length - 1, screen.length) === "0" &&
-    !isNaN(buttonValue) &&
-    isNaN(screen.substring(screen.length - 2, screen.length - 1))
+    !isNaN(parseInt(buttonValue)) &&
+    isNaN(parseInt(screen.substring(screen.length - 2, screen.length - 1))) && (screen.substring(screen.length - 1, screen.length)===".")
   ) {
     screen = screen.substring(0, screen.length - 1);
   }
