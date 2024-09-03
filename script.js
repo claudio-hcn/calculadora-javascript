@@ -40,7 +40,7 @@ if ((buttonValue === "*") && (screen.substring(screen.length - 1, screen.length)
       operacionRealizada = false;
     }
   }
-  //borra el cero si va antes de otro número y después de un signo, genera error en las restas
+  //*borra el cero si va antes de otro número y después de un signo, genera error en las restas
   if (
     screen.substring(screen.length - 1, screen.length) === "0" &&
     !isNaN(parseInt(buttonValue)) &&
@@ -62,7 +62,7 @@ function resolverOp() {
   var screen = (document.getElementById("screen").value = eval(screen));}
   catch (error) {
     document.getElementById("screen").value = "Error!";
-    setTimeout(() => { ceroPantalla(); }, 1000);
+    setTimeout(() => { ceroPantalla(); }, 2000);
   }
   return true;
 }
