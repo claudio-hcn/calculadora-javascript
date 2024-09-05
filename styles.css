@@ -38,7 +38,7 @@ html {
 
   .equal-sign {
     height: 98%;
-    grid-area: 2 / 4 / 6 / 5;
+    grid-area: 3 / 4 / 6 / 5;
   }
 
   .calculator-keys {
