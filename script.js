@@ -1,6 +1,5 @@
 ceroPantalla();
 let operacionRealizada = false;
-let punto= false;
 botones = document.querySelectorAll(".btn");
 botones.forEach(function (boton) {
   boton.addEventListener("click", () => {
@@ -21,34 +20,57 @@ botones.forEach(function (boton) {
 
 function getValue(buttonValue) {
   var screen = document.getElementById("screen").value;
-//!control de puntos
-if ((buttonValue === ".") && (screen.substring(screen.length - 1, screen.length) === ".")) {
-    screen = screen.substring(0, screen.length - 1);
+  //!control de puntos
+
+  if (buttonValue === ".") {
+    const lastNumber = screen.split(/[\+\-\*\/]/).pop(); // Obtiene el último número ingresado
+    if (lastNumber.includes(".")) {
+        return; // Evita agregar más de un punto en el mismo número
+    }
 }
-//! no permite escribir más de 2 simbolos de división o multiplicación seguidos
-if ((buttonValue === "/") && (screen.substring(screen.length - 1, screen.length) === "/")) {
-    screen = screen.substring(0, screen.length - 1);
-}
-if ((buttonValue === "*") && (screen.substring(screen.length - 1, screen.length) === "*")) {
-  screen = screen.substring(0, screen.length - 1);
-}
+  //! no permite escribir más de 2 simbolos de división o multiplicación seguidos
+  if (
+    buttonValue === "/" &&
+    screen.endsWith("/")
+  ) {
+    return;
+  }
+  if (
+    buttonValue === "*" &&
+    screen.endsWith("*")
+  ) {
+    return;
+  }
 
   //*si ya se hizo una operación previa este bloque evita que se concatene el nuevo numero ingresado en pantalla al resultado anterior
   if (screen === "0" || operacionRealizada === true) {
-    if (buttonValue != ".") {
+
+    // if(buttonValue != "/" || buttonValue != "*" || buttonValue != "+" || buttonValue != "-"){
+    if(buttonValue!='.'){
       screen = "";
       operacionRealizada = false;
     }
-  }
-  //*borra el cero si va antes de otro número y después de un signo, genera error en las restas
+      
+  
+    }
+  
+  
+
+  //* Control de cero antes de otros números después de un operador
+  const ultimoCar = screen.slice(-1); // Último carácter en la pantalla
+  const penultimoCar = screen.slice(-2, -1); // Penúltimo carácter
+
   if (
-    screen.substring(screen.length - 1, screen.length) === "0" &&
-    !isNaN(parseInt(buttonValue)) &&
-    isNaN(parseInt(screen.substring(screen.length - 2, screen.length - 1))) && (screen.substring(screen.length - 1, screen.length)===".")
+    ultimoCar === "0" && 
+    !isNaN(buttonValue) && // Si el nuevo valor es un número
+    (penultimoCar === "/" || penultimoCar === "*" || penultimoCar === "+" || penultimoCar === "-")
   ) {
-    screen = screen.substring(0, screen.length - 1);
+    // Si hay un cero después de un operador, reemplaza el cero con el número
+    screen = screen.slice(0, -1);
   }
+
   document.getElementById("screen").value = screen + buttonValue;
+  console.log(screen + buttonValue);
 }
 
 function ceroPantalla() {
@@ -58,11 +80,12 @@ function ceroPantalla() {
 function resolverOp() {
   var screen = document.getElementById("screen").value;
   try {
-
-  var screen = (document.getElementById("screen").value = eval(screen));}
-  catch (error) {
+    var screen = (document.getElementById("screen").value = eval(screen));
+  } catch (error) {
     document.getElementById("screen").value = "Error!";
-    setTimeout(() => { ceroPantalla(); }, 2000);
+    setTimeout(() => {
+      ceroPantalla();
+    }, 2000);
   }
   return true;
 }
